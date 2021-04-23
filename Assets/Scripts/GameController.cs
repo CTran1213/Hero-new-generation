@@ -25,7 +25,6 @@ public class GameController : MonoBehaviour
     int numberOfPlanes = 0;
     int planesDestoyed = 0;
     private int touched = 0;
-    private float cooldown = 0;
 
 
     // World bounds that need to be accessed by other scripts
@@ -56,7 +55,6 @@ public class GameController : MonoBehaviour
         }
 
         TrySpawnEnemy();
-        //UpdateEnemyTouchedText();
         UpdateEggCount();
         DetectWaypointEnable();
     }
@@ -127,11 +125,5 @@ public class GameController : MonoBehaviour
     public static void ReloadScene()
     {
         SceneManager.LoadScene(0);
-    }
-
-    public void UpdateCooldown(float c)
-    {
-        cooldown = c;
-        eggCoodldown.text = "Egg Cooldown: " + c;
     }
 }

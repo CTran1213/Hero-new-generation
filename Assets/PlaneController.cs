@@ -5,13 +5,7 @@ using UnityEngine;
 public class PlaneController : MonoBehaviour
 {
     public Waypoint[] waypoints;
-
     bool randomMovement = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log(waypoints[0].transform.position);
-    }
 
     // Update is called once per frame
     void Update()
@@ -22,7 +16,7 @@ public class PlaneController : MonoBehaviour
         }
     }
 
-    public Vector3 FindNearest(Transform tf)
+    public Waypoint FindNearest(Transform tf)
     {
         Waypoint nearest = waypoints[0];
         float min = Vector3.Distance(tf.position, nearest.transform.position);
@@ -37,14 +31,14 @@ public class PlaneController : MonoBehaviour
             }
         }
 
-        return nearest.transform.position;
+        return nearest;
     }
 
-    public Vector3 FindNext(Transform tf)
+    public Waypoint FindNext(Waypoint lastWP)
     {
         if(randomMovement)
         {
-            return waypoints[Random.Range(0, waypoints.Length)].transform.position;
+            return waypoints[Random.Range(0, waypoints.Length)];
         }
         else
         {
@@ -52,14 +46,14 @@ public class PlaneController : MonoBehaviour
             {
                 if(i == waypoints.Length - 1)
                 {
-                    return waypoints[0].transform.position;
+                    return waypoints[0];
                 }
-                else if(tf.position == waypoints[i].transform.position)
+                else if(waypoints[i] == lastWP)
                 {
-                    return waypoints[i+1].transform.position;
+                    return waypoints[i+1];
                 }
             }
-            return new Vector3(0,0,0);
+            return waypoints[0];
         }   
     }
 }

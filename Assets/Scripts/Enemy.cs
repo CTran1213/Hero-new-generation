@@ -7,9 +7,10 @@ public class Enemy : MonoBehaviour
 {
     int life = 4;
     GameController gameController;
-    Vector3 nextDestination;
+    Waypoint nextWP;
     PlaneController planeController;
     float moveSpeed = 30f;
+    float rotateSpeed = 300f;
     
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,7 @@ public class Enemy : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         planeController = FindObjectOfType<PlaneController>();
 
-        nextDestination = planeController.FindNearest(transform);
+        nextWP = planeController.FindNearest(transform);
     }
 
     void Update()
@@ -27,14 +28,25 @@ public class Enemy : MonoBehaviour
 
     private void Move()
     {
-        if(transform.position != nextDestination) 
+        // Target position
+        Vector2 nextDestination = new Vector2(nextWP.transform.position.x, nextWP.transform.position.y);
+        // Current position
+        Vector2 currPos = new Vector2(transform.position.x, transform.position.y);
+        
+        if(Vector2.Distance(nextDestination, currPos) > 20f) 
         {
-            transform.up = Vector3.Normalize(nextDestination - transform.position);
-            transform.position = Vector3.MoveTowards(transform.position, nextDestination, moveSpeed * Time.deltaTime);
+            // Move forward
+            transform.position += transform.up * moveSpeed * Time.deltaTime;
+
+            // Rotate
+            Vector2 lookDirection = nextDestination - currPos;
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+            Quaternion qTo = Quaternion.Euler(new Vector3(0, 0, angle));
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, qTo, rotateSpeed * Time.deltaTime);
         }
         else
         {
-            nextDestination = planeController.FindNext(transform);
+            nextWP = planeController.FindNext(nextWP);
         }
     }
 

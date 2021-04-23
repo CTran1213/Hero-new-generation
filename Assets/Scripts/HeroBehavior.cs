@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeroBehavior : MonoBehaviour
 {
@@ -21,12 +22,13 @@ public class HeroBehavior : MonoBehaviour
     // Game controller
     GameController gameController;
 
-    // Hero health
+    Slider slider;
 
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
         rb2d = GetComponent<Rigidbody2D>();
+        slider = FindObjectOfType<Slider>();
     }
 
     // Update is called once per frame
@@ -48,7 +50,8 @@ public class HeroBehavior : MonoBehaviour
         }
 
         ProcessBulletSpwan();
-        
+
+        slider.value = (cooldown - (nextFire - Time.time)) / cooldown;
     }
 
     private void MoveWithKey()
@@ -103,6 +106,5 @@ public class HeroBehavior : MonoBehaviour
             ++gameController.eggCount;
             nextFire = Time.time + cooldown;
         }
-        gameController.UpdateCooldown(nextFire - Time.time);
     }
 }
