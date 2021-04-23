@@ -20,6 +20,5 @@ public class Stamina : MonoBehaviour
     {
         currentCooldown = maxCooldown;
         cooldownBar.maxValue = maxCooldown;
-        cooldownBar.value = 
     }
 }
