@@ -61,21 +61,7 @@ public class Enemy : MonoBehaviour
         }
         else if(collision.gameObject.tag == "Egg") 
         {
-            if(life > 1) 
-            {
-                // Setting the transparency of the sprite
-                GetComponent<SpriteRenderer>().color = new Color(
-                    GetComponent<SpriteRenderer>().color.r, 
-                    GetComponent<SpriteRenderer>().color.g,
-                    GetComponent<SpriteRenderer>().color.b,
-                    GetComponent<SpriteRenderer>().color.a * 0.8f);
-
-                --life;
-            }
-            else
-            {
-                selfDestruct();
-            }
+            selfDestruct();
         }
     }
 
