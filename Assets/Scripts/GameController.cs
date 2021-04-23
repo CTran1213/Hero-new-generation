@@ -69,6 +69,10 @@ public class GameController : MonoBehaviour
 
     private void UpdateEggCount()
     {
+        if(eggCount < 0)
+        {
+            eggCount = 0;
+        }
         eggCountText.text = "Eggs: " + eggCount;
     }
 
@@ -107,11 +111,7 @@ public class GameController : MonoBehaviour
         touched++;
         enemyTouched.text = "Enemies Touched: " + touched;
     }
-
-    public void UpdateTouched()
-    {
-        touched++;
-    }
+    
     public void EnemyDestroyed() {
         --numberOfPlanes;
         enemyDestroyed.text = "Destroyed: " + ++planesDestoyed;
