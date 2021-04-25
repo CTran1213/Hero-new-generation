@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    int life = 4;
     GameController gameController;
     Waypoint nextWP;
     PlaneController planeController;
